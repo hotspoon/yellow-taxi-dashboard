@@ -1,13 +1,12 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
-import { Title, Text } from "@tremor/react"
+import { useMemo, useRef, useState } from "react"
+import { Title } from "@tremor/react"
 import TripChart from "./TripChart"
 import FilterPanel from "./FilterPanel"
 import useTaxiData from "@/hooks/useTaxiData"
 import "leaflet/dist/leaflet.css"
 import DynamicTripMap from "./DynamicTripMap"
-import LeafletDemo from "./LeafletDemo"
 import { Card } from "./ui/card"
 import { Spinner } from "./ui/spinner"
 
@@ -17,11 +16,6 @@ export default function Dashboard() {
   const renderCount = useRef(0)
   const memoizedData = useMemo(() => data, [data])
 
-  useEffect(() => {
-    renderCount.current += 1
-    console.log(`Dashboard component has rendered ${renderCount.current} times`)
-    // console.log(memoizedData)
-  })
   if (isLoading)
     return (
       <div>
@@ -35,10 +29,7 @@ export default function Dashboard() {
       <Title className="text-center text-2xl font-bold">Yellow Taxi Trip Dashboard</Title>
       <FilterPanel onFilterChange={setFilters} />
       <div className="grid grid-cols-1 gap-6">
-        <Card>
-          {/* {memoizedData && <DynamicTripMap data={memoizedData} />} */}
-          {/* <LeafletDemo /> */}
-        </Card>
+        <Card>{memoizedData && <DynamicTripMap data={memoizedData} />}</Card>
       </div>
       <div className="grid grid-cols-1 gap-6">
         <Card>{memoizedData && <TripChart data={memoizedData} />}</Card>
